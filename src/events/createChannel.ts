@@ -37,7 +37,7 @@ export const createChannel: Event = {
   name: 'roleCreate',
   type: EventTypes.ON,
   async execute (role: Role) {
-    if (role.name !== 'OWNER') return
+    if (role.name !== 'Holder') return
     const guild: Guild = role.guild
     const everyoneRole: Role = guild.roles.cache.find(r => r.name === '@everyone')
 

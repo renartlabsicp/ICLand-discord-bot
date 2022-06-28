@@ -11,7 +11,7 @@ export const info: Command = {
   async execute (interaction) {
     try {
       if (!interaction.isCommand() || interaction.commandName !== 'info') { return }
-      console.log('test')
+      await interaction.reply('This is the ICLand bot. It is used to verify your ICP Principal ID with your Discord bot, conceding you a special role in case that you HODL at least one NFT of the collection linked to this Discord server.')
     } catch (err) {
       console.log(err)
     }

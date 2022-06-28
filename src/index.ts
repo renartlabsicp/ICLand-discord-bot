@@ -6,16 +6,16 @@ import { createServer } from './api'
 import type { DiscordClient } from './types/discordClient'
 
 const token = process.env.DISCORD_TOKEN
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8000
 
 export const client = new Client({
-  intents: ['GUILDS']
+  intents: ['GUILDS', 'GUILD_MEMBERS']
 }) as DiscordClient
 
 const api = createServer(client)
 
 api.listen(port, () => {
-  console.log('Express server is listening on port 8080')
+  console.log(`Express server is listening on port ${port}`)
 });
 
 (async (): Promise<void> => {
@@ -37,10 +37,6 @@ api.listen(port, () => {
     console.log('Failed to register bot events.')
   }
 })()
-
-client.once('ready', () => {
-  console.log('Discord client is ready!')
-})
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return

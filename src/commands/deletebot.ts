@@ -13,7 +13,7 @@ export const deletebot: Command = {
     try {
       if (!interaction.isCommand() || interaction.commandName !== 'deletebot') { return }
       const guild = interaction.guild
-      const ownerRole = guild.roles.cache.find((r: Role) => r.name === 'OWNER')
+      const ownerRole = guild.roles.cache.find((r: Role) => r.name === 'Holder')
       const iclandCat = guild.channels.cache.find((c: GuildBasedChannel) => c.name === 'icland' && c.type === 'GUILD_CATEGORY')
       const iclandChannels = guild.channels.cache.filter((c: GuildBasedChannel) => c.parentId === iclandCat.id)
 

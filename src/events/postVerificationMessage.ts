@@ -10,19 +10,15 @@ export const postVerificationMessage: Event = {
     const row = new MessageActionRow()
       .addComponents(
         new MessageButton()
-          .setCustomId('icland-verify-button')
           .setLabel('VERIFY')
-          .setStyle('PRIMARY'),
-        new MessageButton()
-          .setLabel('DOCS')
           .setStyle('LINK')
-          .setURL('https://localhost:3000')
+          .setURL(process.env.FRONTEND_URL)
       )
 
     const embed = new MessageEmbed()
-      .setColor('#0099ff')
+      .setColor('#E82278')
       .setTitle('ICLand')
-      .setDescription('Click on the verify button to be redirect to the Verification Dapp. There will be able to verify you wallet. Do not share your private keys. We will never ask for your seed phrase. We will never DM you.')
+      .setDescription('Click on the verify button to be redirected to the ICLand dapp. There you will be able to verify your wallet and Discord account. After you receive a message of confirming a successful verification you can close the ICLand page and come back to this server.')
 
     await channel.send({ embeds: [embed], components: [row] })
   }

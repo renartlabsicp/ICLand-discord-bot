@@ -1,4 +1,5 @@
 import { CommandInteraction, Guild, Role, TextChannel } from 'discord.js'
+import { DiscordClient } from './discordClient'
 
 export enum EventTypes {
   EMIT = 'emit',
@@ -8,5 +9,5 @@ export enum EventTypes {
 export interface Event {
   name: string;
   type: EventTypes;
-  execute: (interaction: CommandInteraction | Guild | Role | TextChannel) => Promise<void>;
+  execute: (interaction: CommandInteraction | Guild | Role | TextChannel | DiscordClient) => Promise<void>;
 }
