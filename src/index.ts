@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { Client } from 'discord.js'
 import { registerCommands } from './utils/registerCommands'
 import { registerEvents } from './utils/registerEvents'
-import { createServer } from './api'
+import app from './api/app'
 import type { DiscordClient } from './types/discordClient'
 
 const token = process.env.DISCORD_TOKEN
@@ -12,9 +12,7 @@ export const client = new Client({
   intents: ['GUILDS', 'GUILD_MEMBERS']
 }) as DiscordClient
 
-const api = createServer(client)
-
-api.listen(port, () => {
+app.listen(port, () => {
   console.log(`Express server is listening on port ${port}`)
 });
 

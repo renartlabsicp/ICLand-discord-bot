@@ -1,45 +1,13 @@
-import type { CategoryChannel, Guild, Role, TextChannel } from 'discord.js'
+import type { Guild, Role } from 'discord.js'
 import { Event, EventTypes } from '../types/event'
-
-const channelConfig = (
-  guild: Guild,
-  parent: CategoryChannel,
-  name: string,
-  everyoneRole: Role,
-  specialRole?: Role
-
-): Promise<TextChannel> => (
-  guild.channels.create(name, {
-    type: 'GUILD_TEXT',
-    parent,
-    permissionOverwrites: specialRole
-      ? [{
-          id: specialRole.id,
-          allow: ['VIEW_CHANNEL', 'SEND_MESSAGES']
-        },
-        {
-          id: everyoneRole.id,
-          deny: ['VIEW_CHANNEL', 'SEND_MESSAGES']
-
-        }]
-      : [{
-          id: guild.id,
-          allow: ['VIEW_CHANNEL']
-        },
-        {
-          id: everyoneRole.id,
-          deny: ['SEND_MESSAGES']
-        }]
-  })
-)
+import { configChannel } from '../utils/configChannels'
 
 export const createChannel: Event = {
-  name: 'roleCreate',
+  name: 'guildCreate',
   type: EventTypes.ON,
-  async execute (role: Role) {
-    if (role.name !== 'Holder') return
-    const guild: Guild = role.guild
+  async execute (guild: Guild) {
     const everyoneRole: Role = guild.roles.cache.find(r => r.name === '@everyone')
+    const botRole: Role = guild.roles.cache.find(r => r.name === 'ICLand')
 
     guild.channels.create('icland', {
       type: 'GUILD_CATEGORY',
@@ -51,9 +19,9 @@ export const createChannel: Event = {
         }
       ]
     }).then(cat => {
-      channelConfig(guild, cat, 'verification', everyoneRole)
-      channelConfig(guild, cat, 'activity', everyoneRole, role)
-      channelConfig(guild, cat, 'owners', everyoneRole, role)
+      configChannel(botRole, everyoneRole, guild, 'verification', cat)
+      configChannel(botRole, everyoneRole, guild, 'listing', cat)
+      configChannel(botRole, everyoneRole, guild, 'sales', cat)
     })
   }
 }

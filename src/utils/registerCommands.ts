@@ -1,5 +1,5 @@
 import { REST } from '@discordjs/rest'
-import { Routes } from 'discord-api-types/v9'
+import { Routes } from 'discord-api-types/v10'
 import { Collection } from 'discord.js'
 import { readdir } from 'fs/promises'
 import { join } from 'path'
@@ -20,7 +20,7 @@ export const registerCommands = async (
 
   try {
     console.log('Started refreshing application (/) commands.')
-    const rest = new REST({ version: '9' }).setToken(client.token || '')
+    const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN)
 
     const commandData = []
 
@@ -51,7 +51,7 @@ export const registerCommands = async (
     // client.commands.set(helpCommand.data.name, helpCommand);
     // commandData.push(helpCommand.data);
 
-    await rest.put(Routes.applicationGuildCommands(client.id, client.guildId), {
+    await rest.put(Routes.applicationCommands(client.id), {
       body: commandData
     })
 
